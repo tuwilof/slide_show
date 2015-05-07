@@ -42,7 +42,10 @@ namespace SlideShow
                     loadImage.UriSource = new Uri(fileInfo.FullName);
                     loadImage.EndInit();
 
-                    image1.Source = loadImage;
+                    Image image = new Image();
+                    image.Source = loadImage;
+
+                    MyPanel.Children.Add(image);
 
                     return;
                 }
@@ -51,6 +54,10 @@ namespace SlideShow
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
+        }
+
+        private void button_Click(object sender, EventArgs e)
+        {
         }
     }
 }
