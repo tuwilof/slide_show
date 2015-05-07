@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,32 @@ namespace SlideShow
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+ 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
+
+                    BitmapImage loadImage = new BitmapImage();
+                    loadImage.BeginInit();
+                    loadImage.UriSource = new Uri(fileInfo.FullName);
+                    loadImage.EndInit();
+
+                    image1.Source = loadImage;
+
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
         }
     }
 }

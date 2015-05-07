@@ -1,8 +1,9 @@
 ﻿<Window x:Class="SlideShow.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="480" Width="720">
+    <Grid x:Name="grid1">
+        <Image x:Name="image1" Width="200" Height="150" VerticalAlignment="Top" Margin="20" />
+        <Button x:Name="button1"  Width="120" Height="30" Content="Вставить картинку" Click="button1_Click" />
     </Grid>
 </Window>
