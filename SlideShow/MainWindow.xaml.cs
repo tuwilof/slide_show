@@ -42,10 +42,10 @@ namespace SlideShow
                     loadImage.UriSource = new Uri(fileInfo.FullName);
                     loadImage.EndInit();
 
-                    Image image = new Image();
-                    image.Source = loadImage;
-
-                    MyPanel.Children.Add(image);
+                    Image smallImage = new Image();
+                    smallImage.Source = loadImage;
+                    smallImage.Height = 80;
+                    ListBox.Items.Add(smallImage);
 
                     return;
                 }
@@ -56,8 +56,18 @@ namespace SlideShow
             }
         }
 
-        private void button_Click(object sender, EventArgs e)
+        private void listBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            var item = ItemsControl.ContainerFromElement(ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (item != null)
+            {
+                BitmapImage loadImage = new BitmapImage();
+                loadImage.BeginInit();
+                loadImage.UriSource = new Uri(((System.Windows.Controls.Image)(item.Content)).Source.ToString());
+                loadImage.EndInit();
+
+                bigImage.Source = loadImage;
+            }
         }
     }
 }
