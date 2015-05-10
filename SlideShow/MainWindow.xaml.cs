@@ -23,17 +23,19 @@ namespace SlideShow
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<string> pictures;
+        List<Slide> pictures;
+        string image;
+
         public MainWindow()
         {
             InitializeComponent();
-            pictures = new List<string>();
+            pictures = new List<Slide>();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
- 
+
             if (openFileDialog.ShowDialog() == true)
             {
                 try
@@ -50,7 +52,7 @@ namespace SlideShow
                     smallImage.Height = 80;
                     ListBox.Items.Add(smallImage);
 
-                    pictures.Add(loadImage.UriSource.AbsolutePath);
+                    pictures.Add(new Slide() { FileInfo = loadImage.UriSource.AbsolutePath, Time = 1000, Type = "picture" });
 
                     return;
                 }
@@ -63,6 +65,9 @@ namespace SlideShow
 
         private void listBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (pictures.SingleOrDefault(a => a.FileInfo == image) != null)
+                pictures.SingleOrDefault(a => a.FileInfo == image).Time = Int32.Parse(myTime.Text);
+
             var item = ItemsControl.ContainerFromElement(ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
             if (item != null)
             {
@@ -71,6 +76,8 @@ namespace SlideShow
                 loadImage.UriSource = new Uri(((System.Windows.Controls.Image)(item.Content)).Source.ToString());
                 loadImage.EndInit();
 
+                image = loadImage.UriSource.AbsolutePath;
+                myTime.Text = "" + pictures.SingleOrDefault(a => a.FileInfo == image).Time;
                 bigImage.Source = loadImage;
             }
         }
@@ -78,6 +85,8 @@ namespace SlideShow
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (pictures.SingleOrDefault(a => a.FileInfo == image) != null)
+                pictures.SingleOrDefault(a => a.FileInfo == image).Time = Int32.Parse(myTime.Text);
 
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -93,9 +102,9 @@ namespace SlideShow
 
                     int count = ((System.Windows.Controls.ItemsControl)(ListBox)).Items.Count;
 
-                    foreach(var p in pictures) 
+                    foreach (var p in pictures)
                     {
-                        slideShow.Body.Add(new Slide() { FileInfo = p, Time = 1000, Type = "picture" });
+                        slideShow.Body.Add(new Slide() { FileInfo = p.FileInfo, Time = p.Time, Type = p.Type });
                     }
 
                     XmlSerializer formatter = new XmlSerializer(typeof(MySlideShow));
@@ -114,7 +123,7 @@ namespace SlideShow
         private void buttonOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            pictures = new List<string>();
+            pictures = new List<Slide>();
             ListBox.Items.Clear();
 
             if (openFileDialog.ShowDialog() == true)
@@ -130,7 +139,7 @@ namespace SlideShow
                         slideShow = (MySlideShow)formatter.Deserialize(fs);
                     }
 
-                    foreach (var slide in slideShow.Body) 
+                    foreach (var slide in slideShow.Body)
                     {
                         FileInfo fileInfo2 = new FileInfo(slide.FileInfo.Replace("%20", " "));
 
@@ -144,7 +153,7 @@ namespace SlideShow
                         smallImage.Height = 80;
                         ListBox.Items.Add(smallImage);
 
-                        pictures.Add(loadImage.UriSource.AbsolutePath);
+                        pictures.Add(new Slide() { FileInfo = loadImage.UriSource.AbsolutePath, Time = slide.Time, Type = slide.Type });
                     }
 
                     return;

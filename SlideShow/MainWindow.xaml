@@ -19,5 +19,6 @@
         <ScrollViewer Grid.Column="0" Grid.Row="1">
             <ListBox x:Name="ListBox" PreviewMouseDown="listBox_PreviewMouseDown" />
         </ScrollViewer>
+        <TextBox x:Name="myTime" Grid.Column="2" Grid.Row="1" Width="100" Height="30" />
     </Grid>
 </Window>
