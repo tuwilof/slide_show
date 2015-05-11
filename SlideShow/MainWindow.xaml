@@ -4,21 +4,40 @@
         Title="MainWindow" Height="480" Width="720">
     <Grid x:Name="grid1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="180"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="150"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Image x:Name="bigImage" Grid.Column="1" Grid.Row="1" Width="300" Height="200" VerticalAlignment="Top" Margin="20" />
-        <Button x:Name="button1" Grid.Column="0" Grid.Row="0"  Width="120" Height="30" Content="Вставить картинку" Click="button1_Click" VerticalAlignment="Top" Margin="20" />
-        <Button x:Name="buttonSave" Grid.Column="1" Grid.Row="0"  Width="100" Height="30" Content="Сохранить" Click="buttonSave_Click" VerticalAlignment="Top" Margin="20" />
-        <Button x:Name="buttonOpen" Grid.Column="2" Grid.Row="0"  Width="100" Height="30" Content="Открыть" Click="buttonOpen_Click" VerticalAlignment="Top" Margin="20" />
-        <ScrollViewer Grid.Column="0" Grid.Row="1">
+        <Image x:Name="bigImage" Grid.Column="1" Grid.Row="2" Width="300" Height="200" VerticalAlignment="Top" Margin="20" />
+        <Button x:Name="button1" Grid.Column="0" Grid.Row="1"  Width="120" Height="30" Content="Вставить слайд" Click="button1_Click" VerticalAlignment="Top" Margin="5" />
+        <ScrollViewer Grid.Column="0" Grid.Row="2">
             <ListBox x:Name="ListBox" PreviewMouseDown="listBox_PreviewMouseDown" />
         </ScrollViewer>
+        <Label Grid.Column="2" Grid.Row="1" Margin="160,0,0,0" >
+            Время
+        </Label>
         <TextBox x:Name="myTime" Grid.Column="2" Grid.Row="1" Width="100" Height="30" />
+        <Menu  Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Новый"></MenuItem>
+                <MenuItem Click="buttonOpen_Click" Header="Открыть"></MenuItem>
+                <MenuItem Header="Сохранить"></MenuItem>
+                <MenuItem Click="buttonSave_Click" Header="Сохранить как..."></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Выход"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Правка">
+                <MenuItem Header="Отмена"></MenuItem>
+                <MenuItem Header="Повтор"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Вырезать"></MenuItem>
+                <MenuItem Header="Копировать"></MenuItem>
+                <MenuItem Header="Вставить"></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>
