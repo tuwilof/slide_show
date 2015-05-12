@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -163,6 +164,24 @@ namespace SlideShow
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
+        }
+        private void buttonMove_Click(object sender, RoutedEventArgs e)
+        {
+            //Создание нового окна.
+            MoveSlideShow winTool = new MoveSlideShow();
+            // Назначение текущего окна владельцем.
+            winTool.Owner = this;
+            winTool.WindowState = System.Windows.WindowState.Maximized;
+            winTool.WindowStyle = System.Windows.WindowStyle.None;
+            winTool.ResizeMode = System.Windows.ResizeMode.NoResize;
+            // Отображение окна, принадлежащего окну-владельцу.
+            winTool.Show();
+            winTool.timerStart(pictures);
+            /*foreach (var slide in pictures)
+            {
+                for (int i = 0; i < slide.Time; i++)
+                    winTool.theImage(slide);
+            }*/
         }
     }
 }
